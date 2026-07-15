@@ -1,0 +1,35 @@
+name: 'SealSecurity'
+description: 'Pre-commit secrets guard for agentic code'
+author: 'AI Security Toolkit'
+branding:
+  icon: 'shield'
+  color: 'red'
+
+inputs:
+  scan-path:
+    description: 'Path to scan'
+    default: '.'
+  block-push:
+    description: 'Block CI if secrets found'
+    default: 'true'
+  report-format:
+    description: 'Output format: text, json, sarif'
+    default: 'sarif'
+  upload-artifact:
+    description: 'Upload scan report as artifact'
+    default: 'true'
+  severity-threshold:
+    description: 'Minimum severity to report (low, medium, high, critical)'
+    default: 'medium'
+
+outputs:
+  secrets-found:
+    description: 'Number of secrets detected'
+  report-path:
+    description: 'Path to scan report'
+
+runs:
+  using: 'composite'
+  steps:
+    - run: python3 ${{ github.action_path }}/seal.py scan --path ${{ inputs.scan-path }} --format ${{ inputs.report-format }} --threshold ${{ inputs.severity-threshold }} --exit-code ${{ inputs.block-push }}
+      shell: bash

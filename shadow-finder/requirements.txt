@@ -1,0 +1,9 @@
+# ShadowFinder dependencies
+# Core (no external deps required for basic operation)
+# For cloud provider scanning, install:
+# boto3>=1.28  # AWS
+# azure-identity>=1.12  # Azure
+# google-cloud-aiplatform>=1.38  # GCP
+# kubernetes>=27.0  # K8s
+#
+# Install all: pip install boto3 azure-identity google-cloud-aiplatform kubernetes

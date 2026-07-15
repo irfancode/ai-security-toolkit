@@ -1,0 +1,76 @@
+name: AI Security Scan
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * 1'  # Every Monday
+
+jobs:
+  seal-security:
+    name: Secrets Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run SealSecurity
+        uses: ./seal-security/action
+        with:
+          scan-path: .
+          block-push: true
+          report-format: sarif
+          severity-threshold: medium
+
+  pipeline-shield:
+    name: CI/CD Remediation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Semgrep
+        uses: semgrep/semgrep-action@v1
+        continue-on-error: true
+      - name: Auto-Remediate
+        run: |
+          python3 pipeline-shield/shield.py \
+            --input-file results.sarif \
+            --severity-threshold high \
+            --auto-fix \
+            --dry-run \
+            --output-report shield-report.md
+
+  iam-defender:
+    name: IaC IAM Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Scan IAM Policies
+        run: |
+          python3 iam-defender/scan.py \
+            --path terraform/ \
+            --threshold medium \
+            --detect-ai-patterns \
+            --format json \
+            --output iam-findings.json
+      - name: Upload IAM Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: iam-findings
+          path: iam-findings.json
+
+  eu-shield:
+    name: EU AI Act Compliance
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compliance Audit
+        run: |
+          python3 eu-shield/audit.py \
+            --manifest model-manifest.json \
+            --format html \
+            --output compliance-report.html
+      - name: Upload Compliance Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: eu-aiact-report
+          path: compliance-report.html

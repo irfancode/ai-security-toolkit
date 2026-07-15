@@ -1,0 +1,7 @@
+{
+  "patterns": [
+    {"name": "gcp-service-account", "regex": "\"type\":\\s*\"service_account\"[^}]*\"private_key_id\":\\s*\"[a-f0-9]{32}", "severity": "critical", "message": "GCP service account key file detected"},
+    {"name": "gcp-api-key", "regex": "AIza[0-9A-Za-z\\-_]{35}", "severity": "critical", "message": "GCP API key detected"},
+    {"name": "gcp-oauth-client", "regex": "(?i)(client_secret|client_id)[\"']?\\s*[:=]\\s*[\"']?[A-Za-z0-9_\\-]{20,}", "severity": "high", "message": "GCP OAuth client credential detected"}
+  ]
+}

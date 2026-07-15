@@ -1,0 +1,10 @@
+{
+  "patterns": [
+    {"name": "generic-api-key", "regex": "(?i)(api[_-]?key|apikey|api[_-]?secret|api_token)[\"']?\\s*[:=]\\s*[\"']?[A-Za-z0-9_\\-]{16,}", "severity": "high", "message": "Potential API key or secret detected"},
+    {"name": "generic-password", "regex": "(?i)(password|passwd|pwd)[\"']?\\s*[:=]\\s*[\"']?[^\"'\\s]{8,}", "severity": "critical", "message": "Potential password in code"},
+    {"name": "generic-token", "regex": "(?i)(token|bearer|auth)[\"']?\\s*[:=]\\s*[\"']?[A-Za-z0-9_\\-.]{20,}", "severity": "high", "message": "Potential authentication token"},
+    {"name": "private-key", "regex": "-----BEGIN (RSA |EC |DSA |OPENSSH )?PRIVATE KEY-----", "severity": "critical", "message": "Private key detected in repository"},
+    {"name": "connection-string", "regex": "(?i)(jdbc|odbc|mysql|postgresql|mongodb|redis|amqp)://[^\\s]+:[^@]+@", "severity": "critical", "message": "Connection string with embedded credentials"},
+    {"name": "jwt-token", "regex": "eyJ[A-Za-z0-9_\\-]{10,}\\.[A-Za-z0-9_\\-]{10,}\\.[A-Za-z0-9_\\-]{10,}", "severity": "high", "message": "JWT token detected"}
+  ]
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title }} — {% endif %}{{ site.title }}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <link rel="stylesheet" href="{{ site.baseurl }}/assets/css/main.css">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.baseurl }}/feed.xml">
+  {% seo %}
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="{{ site.baseurl }}/" class="nav-brand">{{ site.title }}</a>
+      <div class="nav-links">
+        <a href="{{ site.baseurl }}/">Home</a>
+        <a href="{{ site.baseurl }}/blog/">Blog</a>
+        <a href="https://github.com/irfancode/ai-security-toolkit">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main">
+    {{ content }}
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <p>{{ site.title }} — Open-source, community-maintained.</p>
+      <p>
+        <a href="https://github.com/irfancode/ai-security-toolkit">GitHub</a> ·
+        <a href="{{ site.baseurl }}/">Home</a> ·
+        <a href="{{ site.baseurl }}/CONTRIBUTING.md">Contribute</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

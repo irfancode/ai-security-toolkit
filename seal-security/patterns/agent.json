@@ -1,0 +1,12 @@
+{
+  "patterns": [
+    {"name": "agent-inline-env", "regex": "os\\.environ\\[[\"'][A-Z_]+(KEY|TOKEN|SECRET|PASSWORD|CREDENTIAL)[\"']\\]\\s*=\\s*[\"'][A-Za-z0-9_\\-]{16,}", "severity": "critical", "message": "AI agent pattern: hardcoded env var assignment in code. Agent-generated inline credentials."},
+    {"name": "agent-sdk-init", "regex": "(?i)(client|session|connector|ai_client)\\.(init|setup|configure)\\([^)]*(key|secret|token|password)\\s*=\\s*[\"'][A-Za-z0-9_\\-]{16,}", "severity": "critical", "message": "AI agent pattern: credentials passed directly to SDK init call."},
+    {"name": "agent-connection-string-inline", "regex": "(?i)connection_string\\s*=\\s*[\"'][A-Za-z0-9_:=@%&\\-]{30,}", "severity": "high", "message": "AI agent pattern: hardcoded connection string. AI agents frequently embed full connection strings."},
+    {"name": "agent-terraform-hardcoded", "regex": "(?i)resource\\s+\"?[a-z_]+_secret\"?\\s+\\{[^}]*?(access_key|secret_key|password)\\s*=\\s*[\"'][A-Za-z0-9_\\-]{8,}", "severity": "critical", "message": "AI agent pattern: hardcoded credentials in Terraform resource block."},
+    {"name": "agent-cloud-init-script", "regex": "(?i)(gcloud|az|aws|kubectl)\\s+(auth|login|configure|set)\\s+--?(password|key|token|secret)\\s+[\"'][A-Za-z0-9_\\-]{8,}", "severity": "critical", "message": "AI agent pattern: cloud CLI credential in shell script or pipeline."},
+    {"name": "agent-config-yaml-hardcoded", "regex": "(?i)(password|api_key|secret_token|access_key):\\s*[\"'][A-Za-z0-9_\\-]{8,}", "severity": "high", "message": "AI agent pattern: credential in config YAML. Agents frequently hardcode secrets in config files."},
+    {"name": "agent-placeholder-not-replaced", "regex": "(?i)(<YOUR_|YOUR_|INSERT_|REPLACE_)[A-Z_]+(KEY|TOKEN|SECRET|API)", "severity": "medium", "message": "AI agent placeholder left in code — likely unconfigured credential template."},
+    {"name": "agent-hardcoded-iam-inline", "regex": "arn:aws:iam::\\d{12}:role/[A-Za-z0-9_\\-]{10,}", "severity": "medium", "message": "AI agent pattern: hardcoded IAM role ARN. Verify least-privilege."}
+  ]
+}

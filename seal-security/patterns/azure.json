@@ -1,0 +1,8 @@
+{
+  "patterns": [
+    {"name": "azure-connection-string", "regex": "DefaultEndpointsProtocol=https;AccountName=[^;]+;AccountKey=[A-Za-z0-9+/=]{40,}", "severity": "critical", "message": "Azure Storage connection string with account key detected"},
+    {"name": "azure-sql-connection", "regex": "Server=tcp:[^;]+;Database=[^;]+;User[Ii][Dd]=[^;]+;Password=[^;]+", "severity": "critical", "message": "Azure SQL connection string with embedded password"},
+    {"name": "azure-service-principal", "regex": "\"appSecret\"\\s*:\\s*\"[A-Za-z0-9_\\-]{30,}\"", "severity": "critical", "message": "Azure service principal secret detected"},
+    {"name": "azure-subscription-key", "regex": "(?i)(subscription[_-]?key|azure[_-]?api[_-]?key)[\"']?\\s*[:=]\\s*[\"']?[A-Za-z0-9_\\-]{20,}", "severity": "critical", "message": "Azure subscription key detected"}
+  ]
+}
